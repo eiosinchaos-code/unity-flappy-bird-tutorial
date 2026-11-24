@@ -10,6 +10,13 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
+        if (GameSessionData.Instance != null)
+        {
+            spawnRate = Mathf.Max(0.1f, GameSessionData.Instance.spawnRate);
+            verticalGap = Mathf.Max(0.5f, GameSessionData.Instance.verticalGap);
+        }
+
+        CancelInvoke(nameof(Spawn));
         InvokeRepeating(nameof(Spawn), spawnRate, spawnRate);
     }
 
@@ -24,5 +31,4 @@ public class Spawner : MonoBehaviour
         pipes.transform.position += Vector3.up * Random.Range(minHeight, maxHeight);
         pipes.gap = verticalGap;
     }
-
 }
